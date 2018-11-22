@@ -1,0 +1,122 @@
+[
+    {
+        "Namespace": "aws:elasticbeanstalk:application:environment",
+        "OptionName": "APP_ENV",
+        "Value": "prod"
+    },
+    {
+        "Namespace": "aws:elasticbeanstalk:application:environment",
+        "OptionName": "NEW_RELIC_ENABLED",
+        "Value": "true"
+    },
+    {
+        "Namespace": "aws:elasticbeanstalk:application:environment",
+        "OptionName": "NEW_RELIC_APP_NAME",
+        "Value": "News Election API (Production)"
+    },
+    {
+        "Namespace": "aws:elasticbeanstalk:application:environment",
+        "OptionName": "NEW_RELIC_LICENSE_KEY",
+        "Value": "f35f6c99dbf496c7c14c0627170ac7ae0362c6d1"
+    },
+    {
+        "Namespace": "aws:autoscaling:launchconfiguration",
+        "OptionName": "InstanceType",
+        "Value": "t2.small"
+    },
+    {
+        "Namespace": "aws:autoscaling:asg",
+        "OptionName": "MinSize",
+        "Value": "2"
+    },
+    {
+        "Namespace": "aws:autoscaling:asg",
+        "OptionName": "MaxSize",
+        "Value": "8"
+    },
+    {
+        "Namespace": "aws:autoscaling:launchconfiguration",
+        "OptionName": "EC2KeyName",
+        "Value": "Mi9NetworkProdSydney"
+    },
+    {
+        "Namespace": "aws:autoscaling:launchconfiguration",
+        "OptionName": "IamInstanceProfile",
+        "Value": "NetworkProdProfiles-9news-P1MW6N2J4E1N"
+    },
+    {
+        "Namespace": "aws:elb:loadbalancer",
+        "OptionName": "SSLCertificateId",
+        "Value": "arn:aws:acm:ap-southeast-2:976465416942:certificate/9c2f714f-f4d1-430d-9d96-fa0e0f9c01db"
+    },
+    {
+        "Namespace": "aws:ec2:vpc",
+        "OptionName": "VPCId",
+        "Value": "vpc-48610a2d"
+    },
+    {
+        "Namespace": "aws:elasticbeanstalk:customoption",
+        "OptionName": "VpcId",
+        "Value": "vpc-48610a2d"
+    },
+    {
+        "Namespace": "aws:ec2:vpc",
+        "OptionName": "Subnets",
+        "Value": "subnet-d3b4cea4,subnet-8d3d61e8"
+    },
+    {
+        "Namespace": "aws:ec2:vpc",
+        "OptionName": "ELBSubnets",
+        "Value": "subnet-823d61e7,subnet-d4b4cea3"
+    },
+    {
+        "Namespace": "aws:elasticbeanstalk:customoption",
+        "OptionName": "EnvironmentCacheSubnets1",
+        "Value": "subnet-d3b4cea4"
+    },
+    {
+        "Namespace": "aws:elasticbeanstalk:customoption",
+        "OptionName": "EnvironmentCacheSubnets2",
+        "Value": "subnet-8d3d61e8"
+    },
+    {
+        "Namespace": "aws:ec2:vpc",
+        "OptionName": "ELBScheme",
+        "Value": "internal"
+    },
+    {
+        "Namespace": "aws:autoscaling:launchconfiguration",
+        "OptionName": "SecurityGroups",
+        "Value": "sg-51fb1835"
+    },
+    {
+        "Namespace": "aws:elasticbeanstalk:application:environment",
+        "OptionName": "OPS_BILLING_ENV",
+        "Value": "Prod"
+    },
+    {
+        "Namespace": "aws:elasticbeanstalk:application:environment",
+        "OptionName": "OPS_UPTIME_PROFILE",
+        "Value": "0000-2400x7"
+    },
+    {
+        "Namespace": "aws:elasticbeanstalk:environment",
+        "OptionName": "ServiceRole",
+        "Value": "Mi9NetworkProd/InstanceProfile/eb-service-role"
+    },
+    {
+      "Namespace": "aws:elasticbeanstalk:application:environment",
+      "OptionName": "DEBUG",
+      "Value": ""
+    },
+    {
+      "Namespace": "aws:elasticbeanstalk:application:environment",
+      "OptionName": "DEBUG_LEVEL",
+      "Value": "error"
+    },
+    {
+      "Namespace": "aws:elasticbeanstalk:application:environment",
+      "OptionName": "ELASTICSEARCH_URL",
+      "Value": "https://vpc-infra-elk-prod-i2mmhecop67df72iquremjldji.ap-southeast-2.es.amazonaws.com:443"
+    }
+]

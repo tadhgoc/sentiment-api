@@ -1,0 +1,18 @@
+
+# Misc
+.DS_Store
+
+# Editor Files
+.idea/
+.vscode/
+jsconfig.json
+
+# Build
+build/
+coverage/
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Config
+config/local-development.js

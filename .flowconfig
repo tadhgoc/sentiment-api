@@ -1,0 +1,9 @@
+[include]
+
+[ignore]
+.*node_modules/fbjs.*
+.*node_modules/newrelic/test*
+
+[options]
+esproposal.class_static_fields=enable
+esproposal.class_instance_fields=enable
