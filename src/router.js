@@ -9,6 +9,7 @@ import healthCheckRoute from "./routes/health-check";
 import indexRoute from "./routes/index";
 import sentimentRouter from "./routes/sentiment/";
 import locationRouter from "./routes/location/";
+import analyseRouter from "./routes/analyse/";
 import errors from "./middlewares/errors";
 import ResourceNotFoundError from "./errors/resource-not-found";
 
@@ -35,6 +36,7 @@ router.get("/", indexRoute);
 router.get("/health-check", healthCheckRoute);
 
 // Main app routes
+router.use(analyseRouter.routes());
 router.use(sentimentRouter.routes());
 router.use(locationRouter.routes());
 
