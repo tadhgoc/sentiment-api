@@ -12,5 +12,5 @@ module.exports = {
     },
     services: {
         newRelic: false,
-    },
+    }
 };
