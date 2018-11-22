@@ -16,3 +16,7 @@ yarn-error.log
 
 # Config
 config/local-development.js
+
+
+# KEYS
+__key.js

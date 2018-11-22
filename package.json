@@ -1,51 +1,52 @@
 {
-  "name": "election-api",
-  "version": "0.0.0",
-  "description": "Internal api for accessing election data",
-  "private": true,
-  "scripts": {
-    "start": "pm2 start ./build --name news-native-api && pm2 logs --json",
-    "dev": "nodemon src --exec babel-node",
-    "build": "babel src --out-dir build --copy-files",
-    "lint": "eslint .",
-    "test": "jest"
-  },
-  "dependencies": {
-    "config": "^1.19.0",
-    "koa": "^2.0.0",
-    "koa-cache-control": "^1.0.0",
-    "koa-compress": "^2.0.0",
-    "koa-convert": "^1.2.0",
-    "koa-logger": "^2.0.0",
-    "koa-router": "^7.0.0",
-    "lodash": "^4.17.5",
-    "newrelic": "^2.4.0",
-    "newrelic-winston": "0.0.1",
-    "pm2": "^2.1.5",
-    "redis": "^2.8.0",
-    "sequelize": "^4.34.0",
-    "tedious": "^2.3.1",
-    "winston": "^2.2.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.5.1",
-    "babel-eslint": "^6.1.2",
-    "babel-plugin-transform-flow-strip-types": "^6.22.0",
-    "babel-preset-es2015-node6": "^0.4.0",
-    "babel-preset-stage-0": "^6.5.0",
-    "eslint": "^3.9.1",
-    "eslint-plugin-import": "^1.6.0",
-    "eslint-plugin-jsx-a11y": "^2.2.2",
-    "eslint-plugin-react": "^6.3.0",
-    "jest": "^18.1.0",
-    "jest-teamcity-reporter": "^0.4.0",
-    "nodemon": "^1.11.0"
-  },
-  "jest": {
-    "collectCoverage": true,
-    "testPathDirs": [
-      "test"
-    ],
-    "testResultsProcessor": "jest-teamcity-reporter"
-  }
+    "name": "election-api",
+    "version": "0.0.0",
+    "description": "Internal api for accessing election data",
+    "private": true,
+    "scripts": {
+        "start": "pm2 start ./build --name news-native-api && pm2 logs --json",
+        "dev": "nodemon src --exec babel-node",
+        "build": "babel src --out-dir build --copy-files",
+        "lint": "eslint .",
+        "test": "jest",
+        "kill": "pm2 kill"
+    },
+    "dependencies": {
+        "config": "^1.19.0",
+        "koa": "^2.0.0",
+        "koa-cache-control": "^1.0.0",
+        "koa-compress": "^3.0.0",
+        "koa-convert": "^1.2.0",
+        "koa-logger": "^2.0.0",
+        "koa-router": "^7.0.0",
+        "lodash": "^4.17.5",
+        "newrelic": "^2.4.0",
+        "newrelic-winston": "0.0.1",
+        "pm2": "^2.1.5",
+        "redis": "^2.8.0",
+        "sequelize": "^4.34.0",
+        "tedious": "^2.3.1",
+        "winston": "^2.2.0"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.5.1",
+        "babel-eslint": "^6.1.2",
+        "babel-plugin-transform-flow-strip-types": "^6.22.0",
+        "babel-preset-es2015-node6": "^0.4.0",
+        "babel-preset-stage-0": "^6.5.0",
+        "eslint": "^3.9.1",
+        "eslint-plugin-import": "^1.6.0",
+        "eslint-plugin-jsx-a11y": "^2.2.2",
+        "eslint-plugin-react": "^6.3.0",
+        "jest": "^18.1.0",
+        "jest-teamcity-reporter": "^0.4.0",
+        "nodemon": "^1.11.0"
+    },
+    "jest": {
+        "collectCoverage": true,
+        "testPathDirs": [
+            "test"
+        ],
+        "testResultsProcessor": "jest-teamcity-reporter"
+    }
 }
