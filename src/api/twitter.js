@@ -19,3 +19,19 @@ export default (lat, lon) => {
         });
     });
 }
+
+export const getTweetsByName = (name) => {
+    var params = {
+        q: `@${name}`,
+        count: 10,
+        result_type: 'recent',
+        lang: 'en'
+    };
+
+    return new Promise((resolve, reject) => {
+        twitter.get('search/tweets', params, (error, data) => {
+            if(error) reject(error);
+            else resolve(data);
+        });
+    });
+}

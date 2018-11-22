@@ -1,5 +1,6 @@
 import config from 'config';
 import Koa from 'koa';
+import cors from '@koa/cors';
 import { assign } from 'lodash';
 import { logError } from './utils/log';
 import router from './router';
@@ -14,6 +15,8 @@ const newrelic = config.services.newRelic ? require('newrelic') : null;
 assign(app.context, {
     newrelic,
 });
+
+app.use(cors());
 
 app.use(router.routes());
 

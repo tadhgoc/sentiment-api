@@ -35,7 +35,7 @@ export default async (ctx) => {
         return {
             ...location,
             sentiment: adjustedSentimentScore,
-            starScore: starScore > 5 ? 5 : starScore
+            starScore: starScore > 5 ? 5 : starScore < 0 ? 0 : starScore
         }
     }));
 

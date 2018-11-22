@@ -12,6 +12,7 @@
     "kill": "pm2 kill"
   },
   "dependencies": {
+    "@koa/cors": "^2.2.2",
     "aws-sdk": "^2.361.0",
     "config": "^1.19.0",
     "koa": "^2.0.0",
