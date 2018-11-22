@@ -7,7 +7,8 @@ import logger from 'koa-logger';
 import newrelicTracer from './utils/newrelic-tracer';
 import healthCheckRoute from './routes/health-check';
 import indexRoute from './routes/index';
-import electionRouter from './routes/election/';
+import sentimentRouter from './routes/sentiment/';
+import otherRouter from './routes/other/';
 import errors from './middlewares/errors';
 import ResourceNotFoundError from './errors/resource-not-found';
 
@@ -30,7 +31,8 @@ router.get('/', indexRoute);
 router.get('/health-check', healthCheckRoute);
 
 // Main app routes
-router.use(electionRouter.routes());
+router.use(sentimentRouter.routes());
+router.use(otherRouter.routes());
 
 // Return 404 if not previously matched
 router.get('*', ctx => ctx.throw(new ResourceNotFoundError()));
