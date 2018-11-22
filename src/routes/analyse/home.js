@@ -1,26 +1,41 @@
 import ResourceNotFoundError from '../../errors/resource-not-found';
 import ParamMissingError from '../../errors/param-missing';
-import sentiment from '../../api/sentiment';
-import twitter from '../../api/twitter';
-import location from '../../api/location';
+import getSentiment from '../../api/sentiment';
+import getTweets from '../../api/twitter';
+import getLocations, { addressLookup } from '../../api/location';
 
 export default async (ctx) => {
-    const { lat, lon } = ctx.query;
+    let { lat, lon, address } = ctx.query;
 
-    if (!lat) ctx.throw(new ParamMissingError('lat'));
-    if (!lon) ctx.throw(new ParamMissingError('lon'));
+    if (!address) {
+        if (!lat) ctx.throw(new ParamMissingError('lat'));
+        if (!lon) ctx.throw(new ParamMissingError('lon'));
+    } else {
+        const addressDetails = await addressLookup(address);
+        lat = addressDetails.lat;
+        lon = addressDetails.lon;
+    }
 
-    const locations = await location(lat, lon);
+    const locations = await getLocations(lat, lon);
 
     const result = await Promise.all(locations.map(async location => {
-        const tweets = await twitter(location.position.lat, location.position.lon);
+        const tweets = await getTweets(location.position.lat, location.position.lon);
         const tweetsText = tweets.statuses.map(tweet => tweet.text);
 
-        const sentimentResult = await sentiment(tweetsText);
+        const sentiments = (await getSentiment(tweetsText)).ResultList;
+
+        const sentimentScore = sentiments.reduce(
+            (total, { SentimentScore: current }) =>
+                total + current.Positive - current.Negative
+            , 0);
+
+        const adjustedSentimentScore = sentimentScore / sentiments.length;
+        const starScore = Math.round(adjustedSentimentScore*25) / 2;
 
         return {
             ...location,
-            sentiment: sentimentResult.ResultList[0].Sentiment
+            sentiment: adjustedSentimentScore,
+            starScore: starScore > 5 ? 5 : starScore
         }
     }));
 
