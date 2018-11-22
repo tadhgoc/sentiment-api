@@ -1,9 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import Sequelize from 'sequelize';
-import SequelizeCache from '@nec-network/sequelize-cache';
 import config from 'config';
-import cache from './cache';
 import log from '../utils/log';
 
 const getQueries = () => {
@@ -33,8 +31,7 @@ const getConnection = () => {
 
     const sequelize = new Sequelize(sequelizeConfig);
 
-    SequelizeCache.init(sequelize, cache, { log: log.debug });
-    return SequelizeCache.wrapRaw({ ttl: { minAge: 60, maxAge: 1200 } });
+    return sequelize;
 };
 
 export class Database {

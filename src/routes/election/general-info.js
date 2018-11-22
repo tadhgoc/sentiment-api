@@ -25,17 +25,13 @@ export default async (ctx) => {
     if (!electionId) ctx.throw(new ParamMissingError('electionId'));
     if (!areaCode) ctx.throw(new ParamMissingError('areaCode'));
 
-    const [electionInfo, seatCount] = await Promise.all([
-        database.runQuery('election-info', { electionId, areaCode }),
-        database.runQuery('seat-count', { electionId, areaCode }),
-    ]);
+    const res = {
+        hello: 'world'
+    };
 
-    if (seatCount.length === 0) {
+    if (!res) {
         ctx.throw(new ResourceNotFoundError(electionId));
     }
 
-    ctx.body = {
-        ...electionInfo[0],
-        seatCount: applyOverrides(checkMandatoryParties(seatCount)),
-    };
+    ctx.body = res;
 };

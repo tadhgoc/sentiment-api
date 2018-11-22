@@ -3,7 +3,7 @@ import generalInfo from './general-info';
 
 const router = new Router();
 
-router.prefix('/election')
+router.prefix('/sentiment')
     .get('/general-info/:electionId', generalInfo);
 
 export default router;

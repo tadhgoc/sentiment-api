@@ -1,7 +1,6 @@
 {
-    "extends": "eslint-config-mi9",
     "rules": {
         "indent": [2, 4, { "SwitchCase": 1} ],
-        "no-param-reassign": [2, { "props": false }],
+        "no-param-reassign": [2, { "props": false }]
     }
 }
