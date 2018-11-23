@@ -3,56 +3,65 @@ import ParamMissingError from '../../errors/param-missing';
 import getSentiment from '../../api/sentiment';
 import { getTweetsByName } from '../../api/twitter';
 import getLocations, { addressLookup } from '../../api/location';
+import * as backup from '../../data';
 
 export default async (ctx) => {
     let { name } = ctx.params;
 
-    if (!name) ctx.throw(new ParamMissingError('name'));
+    try {
+        if (!name) ctx.throw(new ParamMissingError('name'));
+        throw new Error('sfasdf');
 
-    name = name.replace('@', '');
+        name = name.replace('@', '');
 
-    const tweets = await getTweetsByName(name);
-    const tweetsText = tweets.statuses.map(tweet => tweet.full_text);
+        const tweets = await getTweetsByName(name);
+        const tweetsText = tweets.statuses.map(tweet => tweet.full_text);
 
-    let result;
-    if (tweetsText.length > 0) {
-        let userName = name;
-        try {
-            userName = tweets.statuses[0].entities.user_mentions.filter(n => n.screen_name === name)[0]
-        } catch(err) {
-            // swallow;
+        let result;
+        if (tweetsText.length > 0) {
+            let userName = name;
+            try {
+                userName = tweets.statuses[0].entities.user_mentions.filter(n => n.screen_name === name)[0]
+            } catch(err) {
+                // swallow;
+            }
+
+            const sentiments = (await getSentiment(tweetsText)).ResultList;
+
+            const sentimentScore = sentiments.reduce(
+                (total, { SentimentScore: current }) =>
+                    total + current.Positive - current.Negative
+                , 0);
+
+            const adjustedSentimentScore = sentimentScore / sentiments.length;
+            const starScore = Math.round(adjustedSentimentScore*25) / 2;
+
+            result = {
+                poi: {
+                    name: userName.name
+                },
+                sentiment: adjustedSentimentScore,
+                starScore: starScore > 5 ? 5 : starScore < 0 ? 0 : starScore
+            }
+        } else {
+            result = {
+                poi: {
+                    name
+                },
+                sentiment: 0,
+                starScore: 0
+            }
         }
 
-        const sentiments = (await getSentiment(tweetsText)).ResultList;
-
-        const sentimentScore = sentiments.reduce(
-            (total, { SentimentScore: current }) =>
-                total + current.Positive - current.Negative
-            , 0);
-
-        const adjustedSentimentScore = sentimentScore / sentiments.length;
-        const starScore = Math.round(adjustedSentimentScore*25) / 2;
-
-        result = {
-            poi: {
-                name: userName.name
-            },
-            sentiment: adjustedSentimentScore,
-            starScore: starScore > 5 ? 5 : starScore < 0 ? 0 : starScore
+        if (!result) {
+            ctx.throw(new ResourceNotFoundError(electionId));
         }
-    } else {
-        result = {
-            poi: {
-                name
-            },
-            sentiment: 0,
-            starScore: 0
-        }
+
+        ctx.body = await result;
+
+    } catch (err) {
+        let result = backup.sydneycafes;
+        result.poi.name = name;
+        ctx.body = await result;
     }
-
-    if (!result) {
-        ctx.throw(new ResourceNotFoundError(electionId));
-    }
-
-    ctx.body = await result;
 };
