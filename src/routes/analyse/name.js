@@ -10,7 +10,6 @@ export default async (ctx) => {
 
     try {
         if (!name) ctx.throw(new ParamMissingError('name'));
-        throw new Error('sfasdf');
 
         name = name.replace('@', '');
 
