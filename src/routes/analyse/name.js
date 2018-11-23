@@ -9,16 +9,48 @@ export default async (ctx) => {
 
     if (!name) ctx.throw(new ParamMissingError('name'));
 
-    // const locations = await getLocations(lat, lon);
-
     const tweets = await getTweetsByName(name);
-    const tweetsText = tweets.statuses.map(tweet => tweet.text);
+    const tweetsText = tweets.statuses.map(tweet => tweet.full_text);
 
+    let result;
+    if (tweetsText.length > 0) {
+        let userName = name;
+        try {
+            userName = tweets.statuses[0].entities.user_mentions.filter(n => n.screen_name === name)[0]
+        } catch(err) {
+            // swallow;
+        }
 
+        const sentiments = (await getSentiment(tweetsText)).ResultList;
 
-    if (!tweetsText) {
+        const sentimentScore = sentiments.reduce(
+            (total, { SentimentScore: current }) =>
+                total + current.Positive - current.Negative
+            , 0);
+
+        const adjustedSentimentScore = sentimentScore / sentiments.length;
+        const starScore = Math.round(adjustedSentimentScore*25) / 2;
+
+        result = {
+            poi: {
+                name: userName.name
+            },
+            sentiment: adjustedSentimentScore,
+            starScore: starScore > 5 ? 5 : starScore < 0 ? 0 : starScore
+        }
+    } else {
+        result = {
+            poi: {
+                name
+            },
+            sentiment: 0,
+            starScore: 0
+        }
+    }
+
+    if (!result) {
         ctx.throw(new ResourceNotFoundError(electionId));
     }
 
-    ctx.body = tweetsText;
+    ctx.body = await result;
 };

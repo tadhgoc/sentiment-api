@@ -5,10 +5,11 @@ const twitter = new Twitter(secretKeys.twitter);
 
 export default (lat, lon) => {
     var params = {
-        q: 'coffee OR cafe OR tea',
+        q: 'coffee OR cafe OR tea AND -filter:retweets AND -filter:replies',
         geocode: `${lat},${lon},1km`,
         count: 10,
-        result_type: 'recent',
+        result_type: 'mixed',
+        tweet_mode: 'extended',
         lang: 'en'
     };
 
@@ -21,10 +22,12 @@ export default (lat, lon) => {
 }
 
 export const getTweetsByName = (name) => {
+    const search = name.startsWith('@') ? name : `@${name}`;
     var params = {
-        q: `@${name}`,
+        q: `${search} AND -filter:retweets AND -filter:replies`,
         count: 10,
-        result_type: 'recent',
+        result_type: 'mixed',
+        tweet_mode: 'extended',
         lang: 'en'
     };
 

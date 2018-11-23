@@ -20,23 +20,32 @@ export default async (ctx) => {
 
     const result = await Promise.all(locations.map(async location => {
         const tweets = await getTweets(location.position.lat, location.position.lon);
-        const tweetsText = tweets.statuses.map(tweet => tweet.text);
+        const tweetsText = tweets.statuses.map(tweet => tweet.full_text);
 
-        const sentiments = (await getSentiment(tweetsText)).ResultList;
+        if (tweetsText.length > 0) {
+            const sentiments = (await getSentiment(tweetsText)).ResultList;
 
-        const sentimentScore = sentiments.reduce(
-            (total, { SentimentScore: current }) =>
-                total + current.Positive - current.Negative
-            , 0);
+            const sentimentScore = sentiments.reduce(
+                (total, { SentimentScore: current }) =>
+                    total + current.Positive - current.Negative
+                , 0);
 
-        const adjustedSentimentScore = sentimentScore / sentiments.length;
-        const starScore = Math.round(adjustedSentimentScore*25) / 2;
+            const adjustedSentimentScore = sentimentScore / sentiments.length;
+            const starScore = Math.round(adjustedSentimentScore*25) / 2;
 
-        return {
-            ...location,
-            sentiment: adjustedSentimentScore,
-            starScore: starScore > 5 ? 5 : starScore < 0 ? 0 : starScore
+            return {
+                ...location,
+                sentiment: adjustedSentimentScore,
+                starScore: starScore > 5 ? 5 : starScore < 0 ? 0 : starScore
+            }
+        } else {
+            return {
+                ...location,
+                sentiment: 0,
+                starScore: 0
+            }
         }
+
     }));
 
     if (!result) {
