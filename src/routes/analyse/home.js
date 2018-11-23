@@ -16,10 +16,11 @@ export default async (ctx) => {
         lon = addressDetails.lon;
     }
 
+    const isASQ = lat == -33.864620;
     const locations = await getLocations(lat, lon);
 
     const result = await Promise.all(locations.map(async location => {
-        const tweets = await getTweets(location.position.lat, location.position.lon);
+        const tweets = await getTweets(location.position.lat, location.position.lon, isASQ);
         const tweetsText = tweets.statuses.map(tweet => tweet.full_text);
 
         if (tweetsText.length > 0) {
