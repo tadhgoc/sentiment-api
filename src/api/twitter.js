@@ -4,7 +4,7 @@ import secretKeys from '../__key'
 const twitter = new Twitter(secretKeys.twitter);
 
 export default (lat, lon, isASQ) => {
-    const distance = isASQ ? .2 : 1;
+    const distance = isASQ ? .3 : 1;
 
     var params = {
         q: 'coffee OR cafe OR tea AND -filter:retweets AND -filter:replies',
