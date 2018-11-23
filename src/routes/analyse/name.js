@@ -5,9 +5,11 @@ import { getTweetsByName } from '../../api/twitter';
 import getLocations, { addressLookup } from '../../api/location';
 
 export default async (ctx) => {
-    const { name } = ctx.params;
+    let { name } = ctx.params;
 
     if (!name) ctx.throw(new ParamMissingError('name'));
+
+    name = name.replace('@', '');
 
     const tweets = await getTweetsByName(name);
     const tweetsText = tweets.statuses.map(tweet => tweet.full_text);

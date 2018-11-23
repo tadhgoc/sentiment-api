@@ -24,9 +24,8 @@ export default (lat, lon, isASQ) => {
 }
 
 export const getTweetsByName = (name) => {
-    const search = name.startsWith('@') ? name : `@${name}`;
     var params = {
-        q: `${search} AND -filter:retweets AND -filter:replies`,
+        q: `@${name} AND -filter:retweets AND -filter:replies`,
         count: 10,
         result_type: 'mixed',
         tweet_mode: 'extended',
